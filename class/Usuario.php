@@ -42,6 +42,53 @@
 
 		}
 
+		//Lista de usuários de acordo com a data de cadastro
+		public static function listAll(){
+
+			$sql = new Sql();
+
+			return $sql->select("SELECT * FROM tb_usuarios ORDER BY data_cadastro ASC");
+
+		}
+
+		//Lista de úsuários com este login
+		public static function listLogin($login){
+
+			$sql = new Sql();
+
+			return $sql->select("SELECT * FROM tb_usuarios WHERE login_usuario LIKE :SEARCH ORDER BY data_cadastro", array(
+				":SEARCH"=>"%".$login."%"
+			));
+		}
+
+		//Lista de dados do usuário logado
+		public function login($login, $Password){
+
+			$sql = new Sql();
+
+			$results = $sql->select("SELECT * FROM tb_usuarios WHERE login_usuario = :LOGIN AND senha_usuario = :PASSWORD", array(
+				":LOGIN"=>$login,
+				":PASSWORD"=>$Password
+			));
+
+			if(count($results) > 0){
+
+				$row = $results[0];
+
+				$this->setIdusuario($row['id_usuario']);
+				$this->setLogin($row['login_usuario']);
+				$this->setSenha($row['senha_usuario']);
+				$this->setDtcadastr(new DateTime($row['data_cadastro']));
+
+			}else{
+
+				throw new Exception("Há erro em seu acesso, revise os dados e tente novamente!");
+				
+
+			}
+
+		}
+
 		//Se o programador der um echo no objeto, mostrará as informações
 		public function __toString(){
 
