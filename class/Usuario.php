@@ -89,6 +89,10 @@
 
 		}
 
+		public function insert(){
+			
+		}
+
 		//Se o programador der um echo no objeto, mostrará as informações
 		public function __toString(){
 
