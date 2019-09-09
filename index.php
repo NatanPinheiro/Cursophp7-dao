@@ -31,9 +31,28 @@
 		echo json_encode($serch);*/
 
 		//Seleciona dados de Login
-		$user = new Usuario;
+		/*$user = new Usuario;
 
 		$user->login("Joaozinho", "opaskdaos");
 		
+		echo $user;*/
+
+		//INSERE UM REGISTRO DE USUÁRIO E RETORNA AS INFORMAÇÕES
+		/*$aluno = new Usuario();
+
+		$aluno->setLogin("Aluno Novo");
+		$aluno->setSenha("@lun0");
+
+		$aluno->insert();
+
+		echo $aluno;*/
+
+		//Localiza e ediata dados de um usuário com este login
+		$user = new Usuario();
+
+		$user->localizaById(20);
+
+		$user->update("Professor Xavier", "liSuAMente98");
+
 		echo $user;
 ?>

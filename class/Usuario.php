@@ -31,13 +31,7 @@
 
 			if(count($results) > 0){
 
-				$row = $results[0];
-
-				$this->setIdusuario($row['id_usuario']);
-				$this->setLogin($row['login_usuario']);
-				$this->setSenha($row['senha_usuario']);
-				$this->setDtcadastr(new DateTime($row['data_cadastro']));
-
+				$this->setData($results[0]);
 			}
 
 		}
@@ -73,12 +67,8 @@
 
 			if(count($results) > 0){
 
-				$row = $results[0];
-
-				$this->setIdusuario($row['id_usuario']);
-				$this->setLogin($row['login_usuario']);
-				$this->setSenha($row['senha_usuario']);
-				$this->setDtcadastr(new DateTime($row['data_cadastro']));
+				$this->setData($results[0]);
+				
 
 			}else{
 
@@ -89,8 +79,48 @@
 
 		}
 
+		public function setData($data){
+
+			$this->setIdusuario($data['id_usuario']);
+			$this->setLogin($data['login_usuario']);
+			$this->setSenha($data['senha_usuario']);
+			$this->setDtcadastr(new DateTime($data['data_cadastro']));
+	}
+
 		public function insert(){
+
+			$sql = new Sql();
+
+			$results = $sql->select("CALL sp_usuarios_insert (:LOGIN, :PASSWORD)", array(
+
+					':LOGIN'=>$this->getLogin(),
+					':PASSWORD'=>$this->getSenha()
+
+			));
+
+			if(count($results) > 0){
+
+				$this->setData($results[0]);
+
+			}
 			
+		}
+
+		public function update($login, $password){
+
+			$this->setLogin($login);
+			$this->setSenha($password);
+
+			$sql = new Sql();
+
+			$sql->query("UPDATE tb_usuarios SET login_usuario = :LOGIN, senha_usuario = :PASSWORD WHERE id_usuario = :ID", array(
+
+				":LOGIN"=>$this->getLogin(),
+				":PASSWORD"=>$this->getSenha(),
+				":ID"=>$this->getIdusario()
+
+			));
+
 		}
 
 		//Se o programador der um echo no objeto, mostrará as informações
