@@ -48,11 +48,21 @@
 		echo $aluno;*/
 
 		//Localiza e ediata dados de um usuário com este login
-		$user = new Usuario();
+		/*$user = new Usuario();
 
 		$user->localizaById(20);
 
 		$user->update("Professor Xavier", "liSuAMente98");
+
+		echo $user;*/
+
+		//DELETA USUÁRIO PELO ID
+
+		$user = new Usuario();
+
+		$user->localizaById(10);
+
+		$user->delete();
 
 		echo $user;
 ?>

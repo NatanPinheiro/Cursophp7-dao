@@ -85,7 +85,7 @@
 			$this->setLogin($data['login_usuario']);
 			$this->setSenha($data['senha_usuario']);
 			$this->setDtcadastr(new DateTime($data['data_cadastro']));
-	}
+		}
 
 		public function insert(){
 
@@ -120,6 +120,21 @@
 				":ID"=>$this->getIdusario()
 
 			));
+
+		}
+
+		public function delete(){
+
+			$sql = new Sql();
+
+			$sql->query("DELETE FROM tb_usuarios WHERE id_usuario = :ID", array(
+				":ID"=>$this->getIdusario()
+			));
+
+			$this->setIdusuario(null);
+			$this->setLogin(null);
+			$this->setSenha(null);
+			$this->setDtcadastr(new DateTime());
 
 		}
 
